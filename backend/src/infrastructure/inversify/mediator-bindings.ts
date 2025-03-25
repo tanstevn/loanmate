@@ -21,13 +21,16 @@ export const registerMediator = (container: Container) => {
   handlerRegistry.registerRequestHandlersByDirectoryPath(handlersPath);
   behaviorRegistry.registerPipelineBehaviorsByDirectoryPath(behaviorsPath);
 
-  container.bind(SERVICES.Mediator).toDynamicValue(() => {
-    const args = {
-      container,
-      handlers: handlerRegistry.handlers,
-      behaviors: behaviorRegistry.behaviors,
-    };
+  container
+    .bind(SERVICES.Mediator)
+    .toDynamicValue(() => {
+      const args = {
+        container,
+        handlers: handlerRegistry.handlers,
+        behaviors: behaviorRegistry.behaviors,
+      };
 
-    return new Mediator(args);
-  });
+      return new Mediator(args);
+    })
+    .inSingletonScope();
 };
