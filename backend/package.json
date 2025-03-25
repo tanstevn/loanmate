@@ -4,10 +4,15 @@
     "dev": "nodemon src/index.js"
   },
   "devDependencies": {
+    "@eslint/js": "^9.23.0",
     "@types/node": "^22.13.13",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0",
     "nodemon": "^3.1.9",
+    "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0"
   },
   "dependencies": {
     "cors": "^2.8.5",
