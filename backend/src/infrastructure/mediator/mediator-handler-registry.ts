@@ -1,4 +1,4 @@
-import { globSync } from "fs";
+import { globSync } from "glob";
 import { HANDLERS, HandlerKeys } from "../../shared/types";
 import path from "path";
 

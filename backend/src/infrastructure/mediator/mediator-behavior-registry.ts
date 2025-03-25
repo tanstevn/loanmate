@@ -1,4 +1,4 @@
-import { globSync } from "fs";
+import { globSync } from "glob";
 import path from "path";
 import { BEHAVIORS, BehaviorKeys } from "../../shared/types";
 
