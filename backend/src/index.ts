@@ -1,5 +1,6 @@
 import "dotenv/config";
 import "reflect-metadata";
+import "./infrastructure/inversify/container";
 
 import express from "express";
 import cors from "cors";

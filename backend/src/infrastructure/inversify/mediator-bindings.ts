@@ -4,16 +4,14 @@ import { MediatorHandlerRegistry } from "../mediator/mediator-handler-registry";
 import { MediatorBehaviorRegistry } from "../mediator/mediator-behavior-registry";
 import { SERVICES } from "../../shared/types";
 import { Mediator } from "../mediator/mediator";
-import { IMediator } from "../../application/abstractions/IMediator";
 
-export const registerMediator = (container: Container) => {
-  const handlersPath = path.join(
-    __dirname,
-    "../../application/handlers/**/*.ts"
+export const registerMediator = (container: Container): void => {
+  const handlersPath = path.dirname(
+    path.join(__dirname, "../../application/handlers/*")
   );
-  const behaviorsPath = path.join(
-    __dirname,
-    "../../apis/middlewares/behaviors/*.ts"
+
+  const behaviorsPath = path.dirname(
+    path.join(__dirname, "../../apis/middlewares/behaviors/*.ts")
   );
 
   const handlerRegistry = new MediatorHandlerRegistry();

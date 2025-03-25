@@ -4,7 +4,7 @@ import { LoanController } from "../../apis/controller/loan-controller";
 import { IMediator } from "../../application/abstractions/IMediator";
 import { UserController } from "../../apis/controller/user-controller";
 
-export const registerControllers = (container: Container) => {
+export const registerControllers = (container: Container): void => {
   container
     .bind(CONTROLLERS.LoanController)
     .toDynamicValue((context) => {

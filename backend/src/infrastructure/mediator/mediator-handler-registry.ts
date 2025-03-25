@@ -1,4 +1,4 @@
-import { globSync } from "glob";
+import fs from "fs";
 import { HANDLERS, HandlerKeys } from "../../shared/types";
 import path from "path";
 
@@ -9,18 +9,45 @@ export class MediatorHandlerRegistry {
     this.registeredHandlers = new Map<any, symbol>();
   }
 
+  async #getRequestHandlersRecursive(
+    handlersPath: string,
+    files: fs.Dirent[]
+  ): Promise<void> {
+    for (const file of files) {
+      if (!file.isDirectory()) {
+        const handlerFile = path.join(file.parentPath, file.name);
+        const module = await import(handlerFile);
+
+        const handlerClassName = Object.keys(module).at(0) as HandlerKeys;
+        const handlerClass = module[handlerClassName];
+
+        if ("RequestType" in handlerClass) {
+          const handlerSymbol = HANDLERS[handlerClassName];
+          this.registeredHandlers.set(handlerClass.RequestType, handlerSymbol);
+        }
+      } else {
+        const subFolderPath = path.join(handlersPath, file.name);
+
+        const subFolder = fs
+          .readdirSync(subFolderPath, {
+            withFileTypes: true,
+          })
+          .filter((item) => !item.isDirectory())
+          .map((file) => file);
+
+        await this.#getRequestHandlersRecursive(handlersPath, subFolder);
+      }
+    }
+  }
+
   async registerRequestHandlersByDirectoryPath(
     handlersPath: string
   ): Promise<void> {
-    const files = globSync(handlersPath);
+    const files = fs.readdirSync(handlersPath, {
+      withFileTypes: true,
+    });
 
-    for (const file of files) {
-      const handlerClass = await import(path.resolve(file));
-      const handlerClasSName = handlerClass.name as HandlerKeys;
-      const handlerSymbol = HANDLERS[handlerClasSName];
-
-      this.registeredHandlers.set(handlerClass.RequestType, handlerSymbol);
-    }
+    await this.#getRequestHandlersRecursive(handlersPath, files);
   }
 
   get handlers() {
