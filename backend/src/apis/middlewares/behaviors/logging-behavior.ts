@@ -2,6 +2,7 @@ import {
   IPipelineBehavior,
   RequestHandlerDelegate,
 } from "../../../application/abstractions/IPipelineBehavior";
+import { IRequest } from "../../../application/abstractions/IRequest";
 
 export class LoggingBehavior<TRequest extends {}, TResponse>
   implements IPipelineBehavior<TRequest, TResponse>
@@ -11,8 +12,7 @@ export class LoggingBehavior<TRequest extends {}, TResponse>
     next: RequestHandlerDelegate<TResponse>
   ): Promise<TResponse> {
     const start = process.hrtime();
-
-    console.log(`Processing request for ${request.constructor.name}.`);
+    console.log(`Processing request: ${request.constructor.name}.`);
 
     const result = await next(request);
 
@@ -20,7 +20,7 @@ export class LoggingBehavior<TRequest extends {}, TResponse>
     const endInMilliseconds = (seconds * 1000 + nanoseconds / 1e6).toFixed(2);
 
     console.log(
-      `Request for ${request.constructor.name} completed in ${endInMilliseconds}.`
+      `Request ${request.constructor.name} completed in ${endInMilliseconds}.`
     );
 
     return result;

@@ -24,6 +24,6 @@ export class MediatorBehaviorRegistry {
   }
 
   get behaviors() {
-    return this.registeredBehaviors;
+    return this.registeredBehaviors.reverse();
   }
 }
