@@ -1,3 +1,4 @@
+import { injectable } from "inversify";
 import {
   IPipelineBehavior,
   RequestHandlerDelegate,
@@ -5,6 +6,7 @@ import {
 import { IRequest } from "../../../application/abstractions/IRequest";
 import { ValidationException } from "../../../shared/exceptions/validation-exception";
 
+@injectable()
 export class ValidationBehavior<TRequest extends {}, TResponse>
   implements IPipelineBehavior<TRequest, TResponse>
 {

@@ -1,3 +1,4 @@
+import { injectable } from "inversify";
 import { LoanRepository } from "../../../infrastructure/repositories/loan-repository";
 import { IRequestHandler } from "../../abstractions/IRequestHandler";
 import {
@@ -5,6 +6,7 @@ import {
   GetSampleQueryResult,
 } from "../../queries/get-sample-query";
 
+@injectable()
 export class GetSampleQueryHandler
   implements IRequestHandler<GetSampleQuery, GetSampleQueryResult>
 {
@@ -19,6 +21,8 @@ export class GetSampleQueryHandler
   handle(request: GetSampleQuery): Promise<GetSampleQueryResult> {
     console.log("GetSampleQueryHandler.handle!");
 
-    throw new Error("GetSampleQueryHandler.handle!");
+    return new Promise((resolve, reject) => {
+      resolve(new GetSampleQueryResult());
+    });
   }
 }

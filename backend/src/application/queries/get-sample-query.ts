@@ -6,4 +6,6 @@ export class GetSampleQuery implements IRequest<GetSampleQueryResult> {
   }
 }
 
-export class GetSampleQueryResult {}
+export class GetSampleQueryResult {
+  constructor() {}
+}

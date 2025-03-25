@@ -1,6 +1,8 @@
+import { injectable } from "inversify";
 import { IMediator } from "../../application/abstractions/IMediator";
 import { Request, Response } from "express";
 
+@injectable()
 export class UserController {
   private mediator: IMediator;
 

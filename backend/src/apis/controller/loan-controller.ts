@@ -4,7 +4,9 @@ import {
   GetSampleQuery,
   GetSampleQueryResult,
 } from "../../application/queries/get-sample-query";
+import { injectable } from "inversify";
 
+@injectable()
 export class LoanController {
   private mediator: IMediator;
 
@@ -14,8 +16,6 @@ export class LoanController {
 
   async test(request: Request, response: Response): Promise<void> {
     console.log("loan-controller; success test!");
-
-    console.log(this.mediator);
 
     const query = new GetSampleQuery();
 

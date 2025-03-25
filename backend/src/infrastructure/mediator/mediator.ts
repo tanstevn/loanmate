@@ -1,4 +1,4 @@
-import { Container } from "inversify";
+import { Container, injectable } from "inversify";
 import { IRequest } from "../../application/abstractions/IRequest";
 import { IRequestHandler } from "../../application/abstractions/IRequestHandler";
 import { IPipelineBehavior } from "../../application/abstractions/IPipelineBehavior";
@@ -10,6 +10,7 @@ interface MediatorProps {
   behaviors: symbol[];
 }
 
+@injectable()
 export class Mediator implements IMediator {
   private container: Container;
   private handlers: Map<any, symbol>;

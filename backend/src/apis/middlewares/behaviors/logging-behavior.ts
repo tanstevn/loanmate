@@ -1,9 +1,11 @@
+import { injectable } from "inversify";
 import {
   IPipelineBehavior,
   RequestHandlerDelegate,
 } from "../../../application/abstractions/IPipelineBehavior";
 import { IRequest } from "../../../application/abstractions/IRequest";
 
+@injectable()
 export class LoggingBehavior<TRequest extends {}, TResponse>
   implements IPipelineBehavior<TRequest, TResponse>
 {
