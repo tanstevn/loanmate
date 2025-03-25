@@ -45,6 +45,7 @@ export class Mediator implements IMediator {
         TRequest,
         TResponse
       >;
+
       const nextValue = aggregateResult;
 
       aggregateResult = async () => {

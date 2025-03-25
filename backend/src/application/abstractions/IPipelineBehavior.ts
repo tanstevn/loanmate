@@ -1,4 +1,6 @@
-export type RequestHandlerDelegate<TResponse> = () => Promise<TResponse>;
+export type RequestHandlerDelegate<TResponse> = (
+  request: any
+) => Promise<TResponse>;
 
 export interface IPipelineBehavior<TRequest extends {}, TResponse> {
   handle(

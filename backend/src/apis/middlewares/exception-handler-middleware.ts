@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ValidationException } from "../../../shared/exceptions/validation-exception";
+import { ValidationException } from "../../shared/exceptions/validation-exception";
 
 export const exceptionHandlerMiddleware = (
   error: unknown,

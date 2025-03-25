@@ -5,7 +5,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { mapV1Routes } from "./apis/routes/v1/routes";
-import { exceptionHandlerMiddleware } from "./apis/middlewares/behaviors/exception-handler-middleware";
+import { exceptionHandlerMiddleware } from "./apis/middlewares/exception-handler-middleware";
 
 const app = express();
 
