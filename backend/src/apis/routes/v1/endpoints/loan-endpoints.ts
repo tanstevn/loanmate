@@ -1,8 +1,10 @@
-import express from "express";
+import express, { Router } from "express";
 
-const router = express.Router();
+export const mapLoanEndpoints = (): Router => {
+  const router = express.Router();
 
-router.get("/");
-router.post("/");
+  router.get("/");
+  router.post("/");
 
-export default router;
+  return router;
+};

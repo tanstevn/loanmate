@@ -1,8 +1,12 @@
-import express from "express";
+import express, { Router } from "express";
+import { mapLoanEndpoints } from "./endpoints/loan-endpoints";
+import { mapUserEndpoints } from "./endpoints/user-endpoints";
 
-const router = express.Router();
+export const mapV1Routes = (): Router => {
+  const router = express.Router();
 
-router.use("/users");
-router.use("/loans");
+  router.use("/users", mapUserEndpoints());
+  router.use("/loans", mapLoanEndpoints());
 
-export default router;
+  return router;
+};
