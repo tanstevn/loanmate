@@ -1,3 +1,3 @@
 export interface IRequest<TResponse> {
-    validate(): string[]
+  validate(): string[];
 }

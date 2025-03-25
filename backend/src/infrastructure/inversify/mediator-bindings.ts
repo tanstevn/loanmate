@@ -4,6 +4,7 @@ import { MediatorHandlerRegistry } from "../mediator/mediator-handler-registry";
 import { MediatorBehaviorRegistry } from "../mediator/mediator-behavior-registry";
 import { SERVICES } from "../../shared/types";
 import { Mediator } from "../mediator/mediator";
+import { IMediator } from "../../application/abstractions/IMediator";
 
 export const registerMediator = (container: Container) => {
   const handlersPath = path.join(
