@@ -1,6 +1,5 @@
-import "dotenv/config";
+import { config } from "dotenv";
 import "reflect-metadata";
-import "./infrastructure/inversify/container";
 
 import express from "express";
 import cors from "cors";
@@ -8,6 +7,7 @@ import helmet from "helmet";
 import { mapV1Routes } from "./apis/routes/v1/routes";
 import { exceptionHandlerMiddleware } from "./apis/middlewares/exception-handler-middleware";
 
+config();
 const app = express();
 
 app.use(cors());
