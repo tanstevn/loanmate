@@ -144,4 +144,13 @@ describe("Lender Controller", () => {
       ])
     );
   });
+
+  it("api - should return 200 ok status", async () => {
+    const result = await request(app).get("/api/v1/lenders/all");
+
+    expect(result.status).toBe(200);
+    expect(result.body.success).toBe(true);
+    expect(result.body.data).not.toBeNull();
+    expect(result.body.data.length).toBe(3);
+  });
 });
