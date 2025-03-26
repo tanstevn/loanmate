@@ -14,6 +14,7 @@ export class GetAllLendersQueryHandler
   implements
     IRequestHandler<GetAllLendersQuery, Result<GetAllLendersQueryResult[]>>
 {
+  static RequestType = GetAllLendersQuery;
   private repository: InMemoryRepository;
 
   constructor(repository: InMemoryRepository) {
