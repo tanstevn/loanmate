@@ -1,5 +1,6 @@
 export const HANDLERS = {
   ApplyLoanCommandHandler: Symbol.for("ApplyLoanCommandHandler"),
+  GetAllLendersQueryHandler: Symbol.for("GetAllLendersQueryHandler"),
 };
 
 export const BEHAVIORS = {
@@ -13,7 +14,7 @@ export const SERVICES = {
 
 export const CONTROLLERS = {
   LoanController: Symbol.for("LoanController"),
-  UserController: Symbol.for("UserController"),
+  LenderController: Symbol.for("LenderController"),
 };
 
 export const REPOSITORIES = {
@@ -22,6 +23,3 @@ export const REPOSITORIES = {
 
 export type HandlerKeys = keyof typeof HANDLERS;
 export type BehaviorKeys = keyof typeof BEHAVIORS;
-export type ServiceKeys = keyof typeof SERVICES;
-export type ControllerKeys = keyof typeof CONTROLLERS;
-export type RepositoryKeys = keyof typeof REPOSITORIES;
