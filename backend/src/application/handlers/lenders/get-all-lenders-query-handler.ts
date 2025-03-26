@@ -6,6 +6,8 @@ import {
   GetAllLendersQueryResult,
 } from "../../queries/lenders/get-all-lenders-query";
 import { InMemoryRepository } from "../../../infrastructure/repositories/in-memory-repository";
+import { Lender } from "../../../domain/entities/lender";
+import { Loan } from "../../../domain/entities/loan";
 
 @injectable()
 export class GetAllLendersQueryHandler
@@ -21,11 +23,12 @@ export class GetAllLendersQueryHandler
   async handle(
     request: GetAllLendersQuery
   ): Promise<Result<GetAllLendersQueryResult[]>> {
-    const lenders = this.repository.getEntity("Lenders");
+    const lenders = this.repository.getEntity("Lenders") as Lender[];
 
     if (request.userId) {
-      const loans = this.repository.getEntity("Loans");
-      const userLoan = loans.find((loan) => loan.userId === request.userId);
+      const userLoan = this.repository
+        .getEntity("Loans")
+        .find((loan) => loan.userId === request.userId) as Loan;
 
       if (!userLoan) {
         throw new Error(
@@ -35,7 +38,7 @@ export class GetAllLendersQueryHandler
 
       const result = await Promise.all(
         lenders.map(async (lender) => {
-          const monthlyRepayment = await this.#calculateMonthlyPayment(
+          const monthlyRepayment = await this.calculateMonthlyPayment(
             userLoan.loanAmount,
             lender.interestRate,
             userLoan.loanTerm
@@ -64,7 +67,7 @@ export class GetAllLendersQueryHandler
     return Result.Success(result);
   }
 
-  #calculateMonthlyPayment(
+  private calculateMonthlyPayment(
     loanAmount: number,
     interestRate: number,
     loanTerm: number

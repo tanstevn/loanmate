@@ -7,6 +7,8 @@ import {
 } from "../../commands/loans/apply-loan-command";
 import { v4 as uuidv4 } from "uuid";
 import { InMemoryRepository } from "../../../infrastructure/repositories/in-memory-repository";
+import { User } from "../../../domain/entities/user";
+import { Loan } from "../../../domain/entities/loan";
 
 @injectable()
 export class ApplyLoanCommandHandler
@@ -23,30 +25,32 @@ export class ApplyLoanCommandHandler
   async handle(
     request: ApplyLoanCommand
   ): Promise<Result<ApplyLoanCommandResult>> {
-    const user = {
-      id: uuidv4(),
-      firstName: request.requestBody.firstName,
-      lastName: request.requestBody.lastName,
-      emailAddress: request.requestBody.emailAddress,
-      employmentStatus: request.requestBody.employmentStatus,
-      employerName: request.requestBody.employerName,
-    };
+    const userUUID = uuidv4();
+    const userEntity = new User(
+      userUUID,
+      request.requestBody.firstName,
+      request.requestBody.lastName,
+      request.requestBody.emailAddress,
+      request.requestBody.employmentStatus,
+      request.requestBody.employerName
+    );
 
-    const loan = {
-      id: uuidv4(),
-      userId: user.id,
-      loanPurpose: request.requestBody.loanPurpose,
-      loanAmount: request.requestBody.loanAmount,
-      loanDeposit: request.requestBody.loanDeposit,
-      loanTerm: request.requestBody.loanTerm,
-    };
+    const loanUUID = uuidv4();
+    const loanEntity = new Loan(
+      loanUUID,
+      userUUID,
+      request.requestBody.loanPurpose,
+      request.requestBody.loanAmount,
+      request.requestBody.loanDeposit,
+      request.requestBody.loanTerm
+    );
 
-    this.repository.add("Users", user);
-    this.repository.add("Loans", loan);
+    this.repository.add("Users", userEntity);
+    this.repository.add("Loans", loanEntity);
 
     return Result.Success({
-      userId: user.id,
-      loanId: loan.id,
+      userId: userUUID,
+      loanId: loanUUID,
     });
   }
 }
