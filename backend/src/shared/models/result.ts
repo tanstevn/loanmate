@@ -13,22 +13,22 @@ export class UnitResult {
     return new UnitResult();
   }
 
-  static Error(errors: string[]): UnitResult {
+  static Errors(errors: string[]): UnitResult {
     return new UnitResult(errors);
   }
 }
 
-export class Result<TData> extends UnitResult {
+export class Result<TResponse> extends UnitResult {
   public success: boolean;
-  public data?: TData;
+  public data?: TResponse;
 
-  constructor(data?: TData) {
+  constructor(data?: TResponse) {
     super();
     this.success = super.successful;
     this.data = data;
   }
 
-  static Success<TData>(data?: TData): Result<TData> {
-    return new Result<TData>(data);
+  static Success<TResponse>(data?: TResponse): Result<TResponse> {
+    return new Result<TResponse>(data);
   }
 }

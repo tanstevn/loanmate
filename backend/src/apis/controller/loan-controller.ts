@@ -1,10 +1,10 @@
 import { IMediator } from "../../application/abstractions/IMediator";
 import { NextFunction, Request, Response } from "express";
-import {
-  GetSampleQuery,
-  GetSampleQueryResult,
-} from "../../application/queries/get-sample-query";
 import { injectable } from "inversify";
+import {
+  ApplyLoanCommand,
+  ApplyLoanCommandProps,
+} from "../../application/commands/loans/apply-loan-command";
 
 @injectable()
 export class LoanController {
@@ -14,22 +14,28 @@ export class LoanController {
     this.mediator = mediator;
   }
 
-  async test(
+  async apply(
     request: Request,
     response: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      console.log("loan-controller; success test!");
+      const requestBody = {
+        firstName: request.body.firstName,
+        lastName: request.body.lastName,
+        emailAddress: request.body.emailAddress,
+        employmentStatus: request.body.employmentStatus,
+        employerName: request.body.employerName,
+        loanPurpose: request.body.loanPurpose,
+        loanAmount: request.body.loanAmount,
+        loanDeposit: request.body.loanDeposit,
+        loanTerm: request.body.loanTerm,
+      } as ApplyLoanCommandProps;
 
-      const query = new GetSampleQuery();
+      const command = new ApplyLoanCommand(requestBody);
+      const result = await this.mediator.send(command);
 
-      const result = await this.mediator.send<
-        GetSampleQuery,
-        GetSampleQueryResult
-      >(query);
-
-      response.status(200).json(result);
+      response.status(201).json(result);
     } catch (error: unknown) {
       next(error);
     }

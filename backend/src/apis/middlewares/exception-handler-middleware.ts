@@ -13,7 +13,6 @@ export const exceptionHandlerMiddleware = (
     response.status(400).json({
       success: false,
       message: error.message,
-      stack: error.stack,
     });
 
     return;
@@ -24,6 +23,7 @@ export const exceptionHandlerMiddleware = (
   response.status(500).json({
     success: false,
     message: "Something went wrong.",
+    stack: (error as Error).stack,
   });
 
   return;

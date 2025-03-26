@@ -1,5 +1,5 @@
 export const HANDLERS = {
-  GetSampleQueryHandler: Symbol.for("GetSampleQueryHandler"),
+  ApplyLoanCommandHandler: Symbol.for("ApplyLoanCommandHandler"),
 };
 
 export const BEHAVIORS = {

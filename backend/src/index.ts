@@ -24,3 +24,5 @@ const port = process.env.PORT || 8082;
 app.listen(port, () => {
   console.log(`loanmate server is now running on port ${port}...`);
 });
+
+export default app;
