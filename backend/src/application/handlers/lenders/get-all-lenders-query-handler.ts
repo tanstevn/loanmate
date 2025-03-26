@@ -82,7 +82,7 @@ export class GetAllLendersQueryHandler
         (loanAmount * monthlyInterestRate) /
         (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
 
-      resolve(monthlyPayment);
+      resolve(Number(monthlyPayment.toFixed(2)));
     });
   }
 }
