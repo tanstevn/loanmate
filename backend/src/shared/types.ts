@@ -17,7 +17,7 @@ export const CONTROLLERS = {
 };
 
 export const REPOSITORIES = {
-  LoanRepository: Symbol.for("LoanRepository"),
+  InMemoryRepository: Symbol.for("InMemoryRepository"),
 };
 
 export type HandlerKeys = keyof typeof HANDLERS;

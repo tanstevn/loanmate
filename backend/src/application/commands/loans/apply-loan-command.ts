@@ -4,7 +4,7 @@ import { IRequest } from "../../abstractions/IRequest";
 export class ApplyLoanCommand
   implements IRequest<Result<ApplyLoanCommandResult>>
 {
-  private request: ApplyLoanCommandProps;
+  public request: ApplyLoanCommandProps;
 
   constructor(request: ApplyLoanCommandProps) {
     this.request = request;
