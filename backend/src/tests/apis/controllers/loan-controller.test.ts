@@ -22,7 +22,8 @@ describe("Loan Controller", () => {
 
     mockMediator.send.mockResolvedValue(
       Result.Success<ApplyLoanCommandResult>({
-        id: "56713529-03b1-4a36-8897-8a88f81255a8",
+        userId: "56713529-03b1-4a36-8897-8a88f81255a8",
+        loanId: "87703b6b-3e00-4d38-b213-ce46e832d904",
       })
     );
 
@@ -56,7 +57,8 @@ describe("Loan Controller", () => {
     expect(response.status).toHaveBeenCalledWith(201);
     expect(response.json).toHaveBeenCalledWith(
       Result.Success<ApplyLoanCommandResult>({
-        id: "56713529-03b1-4a36-8897-8a88f81255a8",
+        userId: "56713529-03b1-4a36-8897-8a88f81255a8",
+        loanId: "87703b6b-3e00-4d38-b213-ce46e832d904",
       })
     );
   });

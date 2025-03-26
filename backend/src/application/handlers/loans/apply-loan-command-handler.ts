@@ -23,8 +23,30 @@ export class ApplyLoanCommandHandler
   async handle(
     request: ApplyLoanCommand
   ): Promise<Result<ApplyLoanCommandResult>> {
-    return Result.Success({
+    const user = {
       id: uuidv4(),
+      firstName: request.requestBody.firstName,
+      lastName: request.requestBody.lastName,
+      emailAddress: request.requestBody.emailAddress,
+      employmentStatus: request.requestBody.employmentStatus,
+      employerName: request.requestBody.employerName,
+    };
+
+    const loan = {
+      id: uuidv4(),
+      userId: user.id,
+      loanPurpose: request.requestBody.loanPurpose,
+      loanAmount: request.requestBody.loanAmount,
+      loanDeposit: request.requestBody.loanDeposit,
+      loanTerm: request.requestBody.loanTerm,
+    };
+
+    this.repository.add("Users", user);
+    this.repository.add("Loans", loan);
+
+    return Result.Success({
+      userId: user.id,
+      loanId: loan.id,
     });
   }
 }

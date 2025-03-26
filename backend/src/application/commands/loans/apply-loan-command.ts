@@ -4,39 +4,39 @@ import { IRequest } from "../../abstractions/IRequest";
 export class ApplyLoanCommand
   implements IRequest<Result<ApplyLoanCommandResult>>
 {
-  public request: ApplyLoanCommandProps;
+  public requestBody: ApplyLoanCommandProps;
 
-  constructor(request: ApplyLoanCommandProps) {
-    this.request = request;
+  constructor(requestBody: ApplyLoanCommandProps) {
+    this.requestBody = requestBody;
   }
 
   validate(): string[] | null {
     const errors: string[] = [];
 
-    if (!this.request.firstName) {
+    if (!this.requestBody.firstName) {
       errors.push("First name is required");
     }
 
-    if (!this.request.lastName) {
+    if (!this.requestBody.lastName) {
       errors.push("Last name is required");
     }
 
-    if (!this.request.emailAddress) {
+    if (!this.requestBody.emailAddress) {
       errors.push("Email address is required");
     }
 
     if (
-      this.request.employmentStatus === "Employed" &&
-      !this.request.employerName
+      this.requestBody.employmentStatus === "Employed" &&
+      !this.requestBody.employerName
     ) {
       errors.push("Employer name is required");
     }
 
-    if (!this.request.loanAmount) {
+    if (!this.requestBody.loanAmount) {
       errors.push("Loan amount is required");
     }
 
-    if (!this.request.loanTerm) {
+    if (!this.requestBody.loanTerm) {
       errors.push("Loan term is required");
     }
 
@@ -45,7 +45,8 @@ export class ApplyLoanCommand
 }
 
 export type ApplyLoanCommandResult = {
-  id: string;
+  userId: string;
+  loanId: string;
 };
 
 export type ApplyLoanCommandProps = {
