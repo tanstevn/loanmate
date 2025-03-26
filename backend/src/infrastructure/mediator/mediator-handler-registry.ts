@@ -3,10 +3,10 @@ import { HANDLERS, HandlerKeys } from "../../shared/types";
 import path from "path";
 
 export class MediatorHandlerRegistry {
-  private registeredHandlers: Map<any, symbol>;
+  public handlers: Map<any, symbol>;
 
   constructor() {
-    this.registeredHandlers = new Map<any, symbol>();
+    this.handlers = new Map<any, symbol>();
   }
 
   async #getRequestHandlersRecursive(
@@ -23,7 +23,8 @@ export class MediatorHandlerRegistry {
 
         if ("RequestType" in handlerClass) {
           const handlerSymbol = HANDLERS[handlerClassName];
-          this.registeredHandlers.set(handlerClass.RequestType, handlerSymbol);
+
+          this.handlers.set(handlerClass.RequestType, handlerSymbol);
         }
       } else {
         const subFolderPath = path.join(handlersPath, file.name);
@@ -48,9 +49,5 @@ export class MediatorHandlerRegistry {
     });
 
     await this.#getRequestHandlersRecursive(handlersPath, files);
-  }
-
-  get handlers() {
-    return this.registeredHandlers;
   }
 }

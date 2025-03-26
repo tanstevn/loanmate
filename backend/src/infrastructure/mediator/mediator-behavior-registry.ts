@@ -3,10 +3,10 @@ import { BEHAVIORS, BehaviorKeys } from "../../shared/types";
 import fs from "fs";
 
 export class MediatorBehaviorRegistry {
-  private registeredBehaviors: symbol[];
+  public behaviors: symbol[];
 
   constructor() {
-    this.registeredBehaviors = [];
+    this.behaviors = [];
   }
 
   async registerPipelineBehaviorsByDirectoryPath(
@@ -28,11 +28,7 @@ export class MediatorBehaviorRegistry {
       ) as BehaviorKeys;
 
       const behaviorSymbol = BEHAVIORS[behaviorClassName];
-      this.registeredBehaviors.push(behaviorSymbol);
+      this.behaviors.push(behaviorSymbol);
     }
-  }
-
-  get behaviors() {
-    return this.registeredBehaviors.reverse();
   }
 }
