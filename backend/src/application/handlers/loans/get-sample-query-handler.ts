@@ -5,10 +5,11 @@ import {
   GetSampleQuery,
   GetSampleQueryResult,
 } from "../../queries/get-sample-query";
+import { Result } from "../../../shared/models/result";
 
 @injectable()
 export class GetSampleQueryHandler
-  implements IRequestHandler<GetSampleQuery, GetSampleQueryResult>
+  implements IRequestHandler<GetSampleQuery, Result<GetSampleQueryResult>>
 {
   static RequestType = GetSampleQuery;
 
@@ -18,11 +19,9 @@ export class GetSampleQueryHandler
     this.repository = repository;
   }
 
-  handle(request: GetSampleQuery): Promise<GetSampleQueryResult> {
+  async handle(request: GetSampleQuery): Promise<Result<GetSampleQueryResult>> {
     console.log("GetSampleQueryHandler.handle!");
 
-    return new Promise((resolve, reject) => {
-      resolve(new GetSampleQueryResult());
-    });
+    return Result.Success(new GetSampleQueryResult(123));
   }
 }

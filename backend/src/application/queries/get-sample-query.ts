@@ -2,10 +2,14 @@ import { IRequest } from "../abstractions/IRequest";
 
 export class GetSampleQuery implements IRequest<GetSampleQueryResult> {
   validate(): string[] | null {
-    return null;
+    return ["Hello, World!"];
   }
 }
 
 export class GetSampleQueryResult {
-  constructor() {}
+  public id: number;
+
+  constructor(id: number) {
+    this.id = id;
+  }
 }

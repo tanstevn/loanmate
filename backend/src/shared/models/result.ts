@@ -19,10 +19,12 @@ export class UnitResult {
 }
 
 export class Result<TData> extends UnitResult {
+  public success: boolean;
   public data?: TData;
 
   constructor(data?: TData) {
     super();
+    this.success = super.successful;
     this.data = data;
   }
 

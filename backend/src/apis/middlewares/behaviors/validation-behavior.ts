@@ -19,8 +19,7 @@ export class ValidationBehavior<TRequest extends {}, TResponse>
 
     if (errors && errors.length > 0) {
       throw new ValidationException(
-        request.constructor.name,
-        `Request validation for ${request.constructor.name} failed: ${errors.join(", ")}`
+        `Input validation for ${request.constructor.name} failed: ${errors.join(", ")}`
       );
     }
 

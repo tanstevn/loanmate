@@ -1,5 +1,5 @@
 import { IMediator } from "../../application/abstractions/IMediator";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import {
   GetSampleQuery,
   GetSampleQueryResult,
@@ -14,18 +14,24 @@ export class LoanController {
     this.mediator = mediator;
   }
 
-  async test(request: Request, response: Response): Promise<void> {
-    console.log("loan-controller; success test!");
+  async test(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      console.log("loan-controller; success test!");
 
-    const query = new GetSampleQuery();
+      const query = new GetSampleQuery();
 
-    const result = await this.mediator.send<
-      GetSampleQuery,
-      GetSampleQueryResult
-    >(query);
+      const result = await this.mediator.send<
+        GetSampleQuery,
+        GetSampleQueryResult
+      >(query);
 
-    response.status(200).json({
-      success: true,
-    });
+      response.status(200).json(result);
+    } catch (error: unknown) {
+      next(error);
+    }
   }
 }

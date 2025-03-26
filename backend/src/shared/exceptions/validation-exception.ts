@@ -1,7 +1,6 @@
 export class ValidationException extends Error {
-  constructor(message: string, stack: any) {
+  constructor(message: string) {
     super();
-    this.message = message;
-    this.stack = stack;
+    this.message = `Bad request. ${message}`;
   }
 }
