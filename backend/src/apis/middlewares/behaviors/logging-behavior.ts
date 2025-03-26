@@ -13,7 +13,8 @@ export class LoggingBehavior<TRequest extends {}, TResponse>
     next: RequestHandlerDelegate<TResponse>
   ): Promise<TResponse> {
     const start = process.hrtime();
-    console.log(`Processing request: ${request.constructor.name}.`);
+
+    console.log(`Processing request: ${request.constructor.name}.\n`, request);
 
     const result = await next(request);
 

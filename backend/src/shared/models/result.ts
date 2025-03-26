@@ -1,30 +1,26 @@
 export class UnitResult {
-  public errors?: string[];
+  public successful: boolean;
+  public error?: string;
 
-  constructor(errors?: string[]) {
-    this.errors = errors;
-  }
-
-  get successful() {
-    return !this.errors || this.errors.length === 0;
+  constructor(error?: string) {
+    this.error = error;
+    this.successful = !this.error;
   }
 
   static Success(): UnitResult {
     return new UnitResult();
   }
 
-  static Errors(errors: string[]): UnitResult {
-    return new UnitResult(errors);
+  static Error(error: string): UnitResult {
+    return new UnitResult(error);
   }
 }
 
 export class Result<TResponse> extends UnitResult {
-  public success: boolean;
   public data?: TResponse;
 
   constructor(data?: TResponse) {
     super();
-    this.success = super.successful;
     this.data = data;
   }
 
