@@ -4,7 +4,7 @@ A lending platform designed to streamline loan applications for various financia
 
 This repository consists of two main parts:
 
-### **1. Backend (Node.js + Express + TypeScript)**
+### **1. Backend (Node + Express + TypeScript)**
 
 The backend is a RESTful API built with **Node**, **Express**, and **TypeScript**, ensuring a structured, maintainable, and scalable architecture. It handles business logic, loan processing, and database management.
 
