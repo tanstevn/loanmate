@@ -16,7 +16,7 @@ The backend is a RESTful API built with **Node.js**, **Express**, and **TypeScri
 
 ### **2. Frontend (Vite + React + TypeScript)**
 
-The frontend is a **React** application built with **Vite** for fast development and performance. It provides a user-friendly interface where users can apply for loans, track their applications, and manage loan repayments.
+The frontend is a **React** application built with **Vite** for fast development and performance. It provides a user-friendly interface where users can apply for loans and available lenders will pop up.
 
 - **Framework:** React.js
 - **Build Tool:** Vite
