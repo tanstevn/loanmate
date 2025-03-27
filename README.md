@@ -8,7 +8,7 @@ This repository consists of two main parts:
 
 The backend is a RESTful API built with **Node.js**, **Express**, and **TypeScript**, ensuring a structured, maintainable, and scalable architecture. It handles business logic, loan processing, and database management.
 
-- **Framework:** Express.js
+- **Framework:** Node.js + Express.js
 - **Language:** TypeScript
 - **Database:** In-memory database that is located at /infrastructure/repositories.
 - **Architecture:** Adheres to **Clean Architecture** and follows a **Vertical Slice Architecture** pattern.
