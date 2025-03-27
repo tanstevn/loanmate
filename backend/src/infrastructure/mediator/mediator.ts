@@ -41,7 +41,7 @@ export class Mediator implements IMediator {
 
     let aggregateResult = lastHandler;
 
-    this.behaviors.forEach((behaviorSymbol) => {
+    for (const behaviorSymbol of this.behaviors) {
       const behavior = this.container.get(behaviorSymbol) as IPipelineBehavior<
         TRequest,
         TResponse
@@ -52,7 +52,7 @@ export class Mediator implements IMediator {
       aggregateResult = async () => {
         return await behavior.handle(request, nextValue);
       };
-    });
+    }
 
     return await aggregateResult();
   }
