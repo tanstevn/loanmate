@@ -1,6 +1,6 @@
 # **loanmate**
 
-A lending platform designed to streamline loan applications and approvals for various financial needs, including vehicle loans, home improvement financing, and personal loans.
+A lending platform designed to streamline loan applications for various financial needs, including vehicle loans, home improvement financing, and personal loans.
 
 This repository consists of two main parts:
 
