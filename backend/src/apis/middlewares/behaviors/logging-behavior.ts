@@ -3,9 +3,10 @@ import {
   IPipelineBehavior,
   RequestHandlerDelegate,
 } from "../../../application/abstractions/IPipelineBehavior";
+import { IRequest } from "../../../application/abstractions/IRequest";
 
 @injectable()
-export class LoggingBehavior<TRequest extends {}, TResponse>
+export class LoggingBehavior<TRequest extends IRequest<TResponse>, TResponse>
   implements IPipelineBehavior<TRequest, TResponse>
 {
   async handle(
