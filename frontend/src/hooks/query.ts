@@ -6,8 +6,6 @@ import {
 } from "@tanstack/react-query";
 import { Result, ResultErrors } from "../types/result";
 import { get, post } from "../utils/http";
-import { useContext } from "react";
-import { UserIdContext } from "../utils/context";
 
 const formatFullUrl = (url: string) => {
   let loanmateBaseAddress = process.env.VITE_LOANMATE_PUBLIC_API_URL;
@@ -24,11 +22,6 @@ const formatFullUrl = (url: string) => {
   }
 
   return loanmateBaseAddress + "/api/v1" + url;
-};
-
-export const useUserIdContext = () => {
-  const context = useContext(UserIdContext);
-  return context;
 };
 
 export const useApiQuery = <T>(

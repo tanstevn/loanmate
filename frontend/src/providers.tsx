@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { UserIdContext } from "./utils/context";
+import { UserIdContext } from "./utils/contexts";
 
 const makeQueryClient = () => {
   return new QueryClient({

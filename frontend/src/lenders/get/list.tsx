@@ -1,7 +1,8 @@
 "use client";
 
 import { Card } from "../../components/Card";
-import { useApiQuery, useUserIdContext } from "../../hooks/query";
+import { useUserIdContext } from "../../hooks/context";
+import { useApiQuery } from "../../hooks/query";
 
 interface LendersAllResponse {
   name: string;
@@ -30,7 +31,7 @@ const LendersList = () => {
                     <li>
                       <div>
                         <label className="text-md font-medium">
-                          Monthly repayment:
+                          Monthly repayment:{" "}
                         </label>
                         <label>${lender.monthlyRepayment}</label>
                       </div>
