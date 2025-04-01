@@ -14,7 +14,7 @@ describe("Loan Form", () => {
     );
   });
 
-  it("should allow entering values", () => {
+  it("should allow entering values and see lenders after hitting submit", () => {
     cy.get("input[name='firstName']").type("Steven");
     cy.get("input[name='lastName']").type("Tan");
     cy.get("input[name='emailAddress']").type("test@email.com");
@@ -22,10 +22,16 @@ describe("Loan Form", () => {
     cy.get("select[name='employmentStatus']").select("Employed");
     cy.get("input[name='employerName']").type("Driva");
 
+    cy.get("select[name='loanPurpose']").select("Vehicle");
     cy.get("input[name='loanAmount']").type("1000000");
     cy.get("input[name='loanDeposit']").type("500000");
     cy.get("input[name='loanTerm']").type("7");
 
     cy.get("button[type='submit']").click();
+
+    cy.contains("Driva 1").should("be.visible");
+    cy.contains("Monthly repayment").should("be.visible");
+    cy.contains("Interest rate").should("be.visible");
+    cy.contains("Processing fees").should("be.visible");
   });
 });
