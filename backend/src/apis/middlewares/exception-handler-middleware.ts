@@ -17,6 +17,11 @@ export const exceptionHandlerMiddleware = (
 
   console.error("Global error. Pleas see inner exception.", error);
 
-  response.status(500).json(UnitResult.Error("Something went wrong."));
+  response
+    .status(500)
+    .json(
+      UnitResult.Error(`Something went wrong. ${(error as Error).message}`)
+    );
+
   return;
 };

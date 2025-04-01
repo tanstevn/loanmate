@@ -33,7 +33,7 @@ export class GetAllLendersQueryHandler
 
       if (!userLoan) {
         throw new Error(
-          `Cannot see requested user id [${request.userId}]in the in-memory database.`
+          `Cannot see requested user id [${request.userId}] in the in-memory database.`
         );
       }
 
