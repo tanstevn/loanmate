@@ -20,7 +20,7 @@ describe("Loan Form", () => {
     cy.get("input[name='emailAddress']").type("test@email.com");
 
     cy.get("select[name='employmentStatus']").select("Employed");
-    cy.get("input[name='employerName']").type("Driva");
+    cy.get("input[name='employerName']").should("be.visible").type("Driva");
 
     cy.get("select[name='loanPurpose']").select("Vehicle");
     cy.get("input[name='loanAmount']").type("1000000");
