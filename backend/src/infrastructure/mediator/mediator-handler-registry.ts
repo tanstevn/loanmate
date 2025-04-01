@@ -9,7 +9,17 @@ export class MediatorHandlerRegistry {
     this.handlers = new Map<any, symbol>();
   }
 
-  async #getRequestHandlersRecursive(
+  async registerRequestHandlersByDirectoryPath(
+    handlersPath: string
+  ): Promise<void> {
+    const files = fs.readdirSync(handlersPath, {
+      withFileTypes: true,
+    });
+
+    await this.getRequestHandlersRecursive(handlersPath, files);
+  }
+
+  private async getRequestHandlersRecursive(
     handlersPath: string,
     files: fs.Dirent[]
   ): Promise<void> {
@@ -36,18 +46,8 @@ export class MediatorHandlerRegistry {
           .filter((item) => !item.isDirectory())
           .map((file) => file);
 
-        await this.#getRequestHandlersRecursive(handlersPath, subFolder);
+        await this.getRequestHandlersRecursive(handlersPath, subFolder);
       }
     }
-  }
-
-  async registerRequestHandlersByDirectoryPath(
-    handlersPath: string
-  ): Promise<void> {
-    const files = fs.readdirSync(handlersPath, {
-      withFileTypes: true,
-    });
-
-    await this.#getRequestHandlersRecursive(handlersPath, files);
   }
 }

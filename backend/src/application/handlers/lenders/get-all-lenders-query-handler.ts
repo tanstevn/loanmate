@@ -39,7 +39,7 @@ export class GetAllLendersQueryHandler
 
       const result = await Promise.all(
         lenders.map(async (lender) => {
-          const monthlyRepayment = await this.calculateMonthlyPayment(
+          const monthlyRepayment = this.calculateMonthlyPayment(
             userLoan.loanAmount,
             lender.interestRate,
             userLoan.loanTerm
@@ -72,17 +72,15 @@ export class GetAllLendersQueryHandler
     loanAmount: number,
     interestRate: number,
     loanTerm: number
-  ): Promise<number> {
-    return new Promise((resolve, reject) => {
-      const monthlyInterestRate = interestRate / 12 / 100; // Convert annual rate to monthly and percentage to decimal
-      const numberOfPayments = loanTerm * 12; // Convert term in years to number of monthly payments
+  ): number {
+    const monthlyInterestRate = interestRate / 12 / 100; // Convert annual rate to monthly and percentage to decimal
+    const numberOfPayments = loanTerm * 12; // Convert term in years to number of monthly payments
 
-      // Calculate monthly payment using the formula
-      const monthlyPayment =
-        (loanAmount * monthlyInterestRate) /
-        (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+    // Calculate monthly payment using the formula
+    const monthlyPayment =
+      (loanAmount * monthlyInterestRate) /
+      (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
 
-      resolve(Number(monthlyPayment.toFixed(2)));
-    });
+    return Number(monthlyPayment.toFixed(2));
   }
 }
