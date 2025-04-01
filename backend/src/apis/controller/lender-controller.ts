@@ -17,9 +17,7 @@ export class LenderController {
     next: NextFunction
   ) {
     try {
-      const userId: string = request.query.userId as string;
-      const query = new GetAllLendersQuery(userId);
-
+      const query = new GetAllLendersQuery(request.query);
       const result = await this.mediator.send(query);
 
       response.status(200).json(result);
