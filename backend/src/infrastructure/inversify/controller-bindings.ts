@@ -11,7 +11,7 @@ export const registerControllers = (container: Container): void => {
       const mediator = context.get(SERVICES.Mediator) as IMediator;
       return new LoanController(mediator);
     })
-    .inTransientScope();
+    .inSingletonScope();
 
   container
     .bind(CONTROLLERS.LenderController)
@@ -19,5 +19,5 @@ export const registerControllers = (container: Container): void => {
       const mediator = context.get(SERVICES.Mediator) as IMediator;
       return new LenderController(mediator);
     })
-    .inTransientScope();
+    .inSingletonScope();
 };
