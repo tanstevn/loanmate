@@ -1,6 +1,9 @@
 import path from "path";
 import { BEHAVIORS, BehaviorKeys } from "../../shared/types";
 import fs from "fs";
+import { promisify } from "util";
+
+const readdir = promisify(fs.readdir);
 
 export class MediatorBehaviorRegistry {
   public behaviors: symbol[];
@@ -9,26 +12,30 @@ export class MediatorBehaviorRegistry {
     this.behaviors = [];
   }
 
-  async registerPipelineBehaviorsByDirectoryPath(
+  public async registerPipelineBehaviorsByDirectoryPath(
     behaviorsPath: string
   ): Promise<void> {
-    const files = fs
-      .readdirSync(behaviorsPath, {
-        withFileTypes: true,
+    const files = await readdir(behaviorsPath, {
+      withFileTypes: true,
+    });
+
+    await Promise.all(
+      files.map(async (file) => {
+        try {
+          const behaviorFile = path.join(behaviorsPath, file.name);
+          const behaviorClass = (await import(behaviorFile)) as Object;
+
+          const behaviorClassName = Object.keys(behaviorClass).at(
+            0
+          ) as BehaviorKeys;
+
+          const behaviorSymbol = BEHAVIORS[behaviorClassName];
+          this.behaviors.push(behaviorSymbol);
+        } catch (error: unknown) {
+          console.error(`Error registering behavior ${file.name}:`, error);
+          // TO DO: Throw custom exception here
+        }
       })
-      .filter((item) => !item.isDirectory())
-      .map((item) => item.name);
-
-    for (const file of files) {
-      const behaviorFile = path.join(behaviorsPath, file);
-      const behaviorClass = (await import(behaviorFile)) as Object;
-
-      const behaviorClassName = Object.keys(behaviorClass).at(
-        0
-      ) as BehaviorKeys;
-
-      const behaviorSymbol = BEHAVIORS[behaviorClassName];
-      this.behaviors.push(behaviorSymbol);
-    }
+    );
   }
 }
