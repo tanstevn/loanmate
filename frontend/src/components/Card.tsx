@@ -36,9 +36,9 @@ interface CardBodyProps
 
 const CardBody = ({ className, children, ...props }: CardBodyProps) => {
   return (
-    <p className="text-xs text-gray-400 pl-0.5" {...props}>
+    <div className="text-xs text-gray-400 pl-0.5" {...props}>
       {children}
-    </p>
+    </div>
   );
 };
 
