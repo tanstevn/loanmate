@@ -15,14 +15,16 @@ export class Mediator implements IMediator {
   private container: Container;
   private handlers: Map<any, symbol>;
   private behaviors: symbol[];
+  private handlerCache: Map<symbol, IRequestHandler<any, any>>;
 
   constructor({ container, handlers, behaviors }: MediatorProps) {
     this.container = container;
     this.handlers = handlers;
     this.behaviors = behaviors;
+    this.handlerCache = new Map();
   }
 
-  async send<TRequest extends IRequest<TResponse>, TResponse>(
+  public async send<TRequest extends IRequest<TResponse>, TResponse>(
     request: TRequest
   ): Promise<TResponse> {
     const handlerSymbol = this.handlers.get(request.constructor);
@@ -31,9 +33,15 @@ export class Mediator implements IMediator {
       throw new Error(`No handler registered for ${request}`);
     }
 
-    const requestHandler = this.container.get(
-      handlerSymbol!
-    ) as IRequestHandler<TRequest, TResponse>;
+    let requestHandler: IRequestHandler<TRequest, TResponse>;
+    const cachedHandler = this.handlerCache.get(handlerSymbol);
+
+    if (!cachedHandler) {
+      requestHandler = this.container.get(handlerSymbol!);
+      this.handlerCache.set(handlerSymbol, requestHandler);
+    } else {
+      requestHandler = cachedHandler;
+    }
 
     const lastHandler = async () => {
       return requestHandler.handle(request);
