@@ -10,7 +10,7 @@ export const mapLoanEndpoints = (): Router => {
 
   router.post(
     "/apply",
-    (request: Request, response: Response, next: NextFunction) =>
+    async (request: Request, response: Response, next: NextFunction) =>
       controller.apply(request, response, next)
   );
 
