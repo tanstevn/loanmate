@@ -12,7 +12,7 @@ export const mapLenderEndpoints = (): Router => {
 
   router.get(
     "/all",
-    (request: Request, response: Response, next: NextFunction) =>
+    async (request: Request, response: Response, next: NextFunction) =>
       controller.getAllLenders(request, response, next)
   );
 
