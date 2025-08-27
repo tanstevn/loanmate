@@ -151,7 +151,7 @@ const ApplyLoanPage = () => {
             isLoading={false}
           />
 
-          {employmentStatus === "employed" && (
+          {employmentStatus === "Employed" && (
             <TextInput
               id="employerName"
               label="Employer name"
