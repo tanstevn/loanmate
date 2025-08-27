@@ -4,22 +4,27 @@ export class GetAllLendersQuery implements IRequest<GetAllLendersQueryResult> {
   public userId?: string;
   public loanId?: string;
 
-  constructor(query: any) {
+  constructor(query: GetAllLendersQueryProps) {
     this.allocateRequest(query);
   }
 
-  validate(): string[] | null {
+  public validate(): string[] | null {
     return null;
   }
 
-  private allocateRequest(query: any) {
+  private allocateRequest(query: GetAllLendersQueryProps) {
     if (query.userId) {
-      this.userId = query.userId as string;
+      this.userId = query.userId;
     } else if (query.loanId) {
-      this.loanId = query.loanId as string;
+      this.loanId = query.loanId;
     }
   }
 }
+
+export type GetAllLendersQueryProps = {
+  userId?: string;
+  loanId?: string;
+};
 
 export type GetAllLendersQueryResult = {
   name: string;
