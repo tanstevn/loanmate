@@ -1,6 +1,9 @@
 import fs from "fs";
 import { HANDLERS, HandlerKeys } from "../../shared/types";
 import path from "path";
+import { promisify } from "util";
+
+const readdir = promisify(fs.readdir);
 
 export class MediatorHandlerRegistry {
   public handlers: Map<any, symbol>;
@@ -9,10 +12,10 @@ export class MediatorHandlerRegistry {
     this.handlers = new Map<any, symbol>();
   }
 
-  async registerRequestHandlersByDirectoryPath(
+  public async registerRequestHandlersByDirectoryPath(
     handlersPath: string
   ): Promise<void> {
-    const files = fs.readdirSync(handlersPath, {
+    const files = await readdir(handlersPath, {
       withFileTypes: true,
     });
 
@@ -23,31 +26,36 @@ export class MediatorHandlerRegistry {
     handlersPath: string,
     files: fs.Dirent[]
   ): Promise<void> {
-    for (const file of files) {
-      if (!file.isDirectory()) {
-        const handlerFile = path.join(file.parentPath, file.name);
-        const module = await import(handlerFile);
+    await Promise.all(
+      files.map(async (file) => {
+        try {
+          if (!file.isDirectory()) {
+            const handlerFile = path.join(file.parentPath, file.name);
+            const module = await import(handlerFile);
 
-        const handlerClassName = Object.keys(module).at(0) as HandlerKeys;
-        const handlerClass = module[handlerClassName];
+            const handlerClassName = Object.keys(module).at(0) as HandlerKeys;
+            const handlerClass = module[handlerClassName];
 
-        if ("RequestType" in handlerClass) {
-          const handlerSymbol = HANDLERS[handlerClassName];
+            if ("RequestType" in handlerClass) {
+              const handlerSymbol = HANDLERS[handlerClassName];
+              this.handlers.set(handlerClass.RequestType, handlerSymbol);
+            }
+          } else {
+            const subFolderPath = path.join(handlersPath, file.name);
+            const subFolder = await readdir(subFolderPath, {
+              withFileTypes: true,
+            });
 
-          this.handlers.set(handlerClass.RequestType, handlerSymbol);
+            await this.getRequestHandlersRecursive(handlersPath, subFolder);
+          }
+        } catch (error: unknown) {
+          console.error(
+            `Error registering to mediator handler ${file.name}:`,
+            error
+          );
+          // TO DO: Thrwo custom exception here
         }
-      } else {
-        const subFolderPath = path.join(handlersPath, file.name);
-
-        const subFolder = fs
-          .readdirSync(subFolderPath, {
-            withFileTypes: true,
-          })
-          .filter((item) => !item.isDirectory())
-          .map((file) => file);
-
-        await this.getRequestHandlersRecursive(handlersPath, subFolder);
-      }
-    }
+      })
+    );
   }
 }
