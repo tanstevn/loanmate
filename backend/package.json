@@ -1,7 +1,9 @@
 {
     "scripts": {
-        "start": "ts-node src/index.ts",
-        "dev": "nodemon src/index.ts",
+        "build": "rimraf ./dist && tsc",
+        "local": "ts-node src/index.ts",
+        "local-dev": "nodemon src/index.ts",
+        "start": "npm run build && ts-node dist/index.js",
         "test": "jest --config=jest.config.ts"
     },
     "devDependencies": {
