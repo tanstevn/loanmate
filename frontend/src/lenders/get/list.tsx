@@ -23,39 +23,33 @@ const LendersList = () => {
       <div className="flex mb-4 gap-6">
         {lenders?.map((lender) => {
           return (
-            <Card>
+            <Card key={lender.name}>
               <Card.Title>{lender.name}</Card.Title>
               <Card.Body>
                 <ul className="flex flex-col gap-3">
                   {lender.monthlyRepayment && (
                     <li>
-                      <div>
-                        <label className="text-md font-medium">
-                          Monthly repayment:{" "}
-                        </label>
-                        <label>${lender.monthlyRepayment}</label>
-                      </div>
+                      <label className="text-md font-medium">
+                        Monthly repayment:{" "}
+                      </label>
+                      <label>${lender.monthlyRepayment}</label>
                     </li>
                   )}
                   <li>
-                    <div>
-                      <label className="text-md font-medium">
-                        Interest rate:{" "}
-                      </label>
-                      <label className="text-md font-medium">
-                        {lender.interestRate}%
-                      </label>
-                    </div>
+                    <label className="text-md font-medium">
+                      Interest rate:{" "}
+                    </label>
+                    <label className="text-md font-medium">
+                      {lender.interestRate}%
+                    </label>
                   </li>
                   <li>
-                    <div>
-                      <label className="text-md font-medium">
-                        Processing fees:{" "}
-                      </label>
-                      <label className="text-md font-medium">
-                        ${lender.processingFees}
-                      </label>
-                    </div>
+                    <label className="text-md font-medium">
+                      Processing fees:{" "}
+                    </label>
+                    <label className="text-md font-medium">
+                      ${lender.processingFees}
+                    </label>
                   </li>
                 </ul>
               </Card.Body>
