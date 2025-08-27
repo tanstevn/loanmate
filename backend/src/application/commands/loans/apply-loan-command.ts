@@ -1,5 +1,6 @@
 import { Result } from "../../../shared/models/result";
 import { IRequest } from "../../abstractions/IRequest";
+import { IRuleValidation } from "../../abstractions/IRuleValidation";
 
 export class ApplyLoanCommand
   implements IRequest<Result<ApplyLoanCommandResult>>
@@ -10,35 +11,54 @@ export class ApplyLoanCommand
     this.requestBody = requestBody;
   }
 
-  validate(): string[] | null {
+  #applyLoanCommandRules: IRuleValidation<ApplyLoanCommandProps>[] = [
+    {
+      field: "firstName",
+      validator: (value) => typeof value === "string" && Boolean(value),
+      errorMessage: "First name is required.",
+    },
+    {
+      field: "lastName",
+      validator: (value) => typeof value === "string" && Boolean(value),
+      errorMessage: "Last name is required.",
+    },
+    {
+      field: "emailAddress",
+      validator: (value) => typeof value === "string" && Boolean(value),
+      errorMessage: "Email address is required.",
+    },
+    {
+      field: "employmentStatus",
+      validator: (value) => {
+        const employmentStatus =
+          value as ApplyLoanCommandProps["employmentStatus"];
+
+        return Boolean(employmentStatus === "Employed");
+      },
+      errorMessage: "Employer name is required.",
+    },
+    {
+      field: "loanAmount",
+      validator: (value) => typeof value === "number" && Boolean(value),
+      errorMessage: "Loan amount is required.",
+    },
+    {
+      field: "loanTerm",
+      validator: (value) => typeof value === "number" && Boolean(value),
+      errorMessage: "Loan term is required.",
+    },
+  ];
+
+  public validate(): string[] | null {
     const errors: string[] = [];
 
-    if (!this.requestBody.firstName) {
-      errors.push("First name is required");
-    }
+    this.#applyLoanCommandRules.forEach((rule) => {
+      const value = this.requestBody[rule.field];
 
-    if (!this.requestBody.lastName) {
-      errors.push("Last name is required");
-    }
-
-    if (!this.requestBody.emailAddress) {
-      errors.push("Email address is required");
-    }
-
-    if (
-      this.requestBody.employmentStatus === "Employed" &&
-      !this.requestBody.employerName
-    ) {
-      errors.push("Employer name is required");
-    }
-
-    if (!this.requestBody.loanAmount) {
-      errors.push("Loan amount is required");
-    }
-
-    if (!this.requestBody.loanTerm) {
-      errors.push("Loan term is required");
-    }
+      if (!rule.validator(value)) {
+        errors.push(rule.errorMessage);
+      }
+    });
 
     return errors;
   }
