@@ -47,7 +47,7 @@ const SelectInput = ({
         >
           {!isLoading &&
             options?.map((option) => (
-              <option key={option.id} value={option.id}>
+              <option key={option.id} value={option.value}>
                 {option.value}
               </option>
             ))}
